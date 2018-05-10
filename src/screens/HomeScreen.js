@@ -4,6 +4,8 @@ import Expo from "expo";
 import ExpoTHREE, { THREE } from "expo-three";
 import ExpoGraphics from "expo-graphics";
 
+console.disableYellowBox = true;
+
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null
@@ -27,9 +29,20 @@ export default class HomeScreen extends React.Component {
       arSession,
       this.renderer
     );
+
+    //initialize camera
+    this.camera = ExpoTHREE.createARCamera(
+      arSession,
+      width / scale,
+      height / scale,
+      0.01,
+      1000
+    );
   };
 
-  onRender = delta => {};
+  onRender = delta => {
+    this.renderer.render(this.scene, this.camera);
+  };
 
   render() {
     return (
@@ -42,5 +55,3 @@ export default class HomeScreen extends React.Component {
     );
   }
 }
-
-const styles = StyleSheet.create({});
